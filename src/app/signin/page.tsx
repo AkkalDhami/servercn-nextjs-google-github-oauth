@@ -1,9 +1,12 @@
-import { OAuthSignin } from "@/components/auth/oauth-signin";
+import { GoogleAndGitHubSignin } from "@/components/auth/google-github-signin";
 
 export default function Page() {
   return (
-    <div className={"flex bg-neutral-950 h-screen w-full items-center justify-center"}>
-      <OAuthSignin />
+    <div
+      className={
+        "flex h-screen w-full items-center justify-center bg-neutral-950"
+      }>
+      <GoogleAndGitHubSignin />
     </div>
   );
 }

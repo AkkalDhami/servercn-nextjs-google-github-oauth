@@ -3,8 +3,9 @@
 import { signIn, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
-export function OAuthSignin() {
+export function GoogleAndGitHubSignin() {
   const session = useSession();
+  
   if (session.status === "authenticated") {
     return redirect("/");
   }
