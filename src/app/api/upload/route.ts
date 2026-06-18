@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
+
 import {
-  deleteFileFromCloudinary,
-  uploadToCloudinary
-} from "@/services/cloudinary.service";
+  deleteFilesFromImageKit,
+  uploadToImageKit
+} from "@/services/imagekit.service";
 
 export async function POST(req: NextRequest) {
   try {
@@ -23,10 +24,10 @@ export async function POST(req: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    //* Upload to Cloudinary
-    const uploadedFile = await uploadToCloudinary(buffer, {
-      folder: "test",
-      resource_type: "auto"
+    //* Upload to ImageKit
+    const uploadedFile = await uploadToImageKit(buffer, {
+      folder: "/uploads",
+      fileName: file.name
     });
 
     return NextResponse.json(
@@ -51,7 +52,7 @@ export async function POST(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   try {
-    const { publicId } = await req.json();
+    const { publicId } = await req.json(); //* { publicId: "publicId" }
 
     if (!publicId) {
       return NextResponse.json(
@@ -63,8 +64,8 @@ export async function DELETE(req: NextRequest) {
       );
     }
 
-    const result = await deleteFileFromCloudinary(publicId);
-    // const result = await deleteFilesFromCloudinary([...publicIds]);
+    //* Delete file from ImageKit
+    const result = await deleteFilesFromImageKit([publicId]);
 
     return NextResponse.json({
       success: true,
